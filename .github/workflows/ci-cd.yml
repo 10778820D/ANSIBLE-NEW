@@ -14,10 +14,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-      - name: Install deps & run tests
+      - name: Install deps
         run: |
           cd app
-          # Si no tienes tests aún, cambia 'npm test' por 'echo "No tests yet"'
           npm install
           echo "Testing skipped for now" 
 
@@ -28,12 +27,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare SSH
+      - name: Install cloudflared
         run: |
-          mkdir -p ~/.ssh
-          # Usamos StrictHostKeyChecking=no para no depender del secreto SSH_KNOWN_HOSTS por ahora
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+          chmod +x cloudflared-linux-amd64
+          sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
+
+      - name: Prepare SSH Key
+        run: |
+          mkdir -p /tmp
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/ssh_key
+          chmod 600 /tmp/ssh_key
 
       - name: Install Ansible
         run: |
@@ -43,7 +47,6 @@ jobs:
       - name: Run Ansible Playbook
         env:
           ANSIBLE_HOST_KEY_CHECKING: "False"
-          ANSIBLE_ROLES_PATH: ./ansible/roles
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         run: |
-          # Importante: ejecutamos desde la raíz porque tu repo tiene la carpeta 'ansible'
-          ansible-playbook -i ansible/inventories/production.yml ansible/playbooks/deploy.yml --private-key ~/.ssh/id_rsa
+          ansible-playbook -i ansible/inventories/production.yml ansible/playbooks/deploy.yml --private-key /tmp/ssh_key
