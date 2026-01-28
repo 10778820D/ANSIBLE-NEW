@@ -10,7 +10,7 @@
       - nodejs
       - npm
     state: present
-    update_cache: yes
+    update_cache: no
   become: yes
 
 - name: Include deploy tasks
