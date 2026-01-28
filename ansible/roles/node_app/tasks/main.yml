@@ -4,10 +4,13 @@
     state: present
   become: yes
 
-- name: Ensure nodejs is installed
+- name: Ensure nodejs and npm are installed
   apt:
-    name: nodejs
+    name:
+      - nodejs
+      - npm
     state: present
+    update_cache: yes
   become: yes
 
 - name: Include deploy tasks
