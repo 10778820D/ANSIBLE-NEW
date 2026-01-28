@@ -16,7 +16,7 @@
 
 - name: Install npm dependencies
   npm:
-    path: path: /home/deploy/apps/myapp/app
+    path: /home/deploy/apps/myapp/app
     production: yes
 
 - name: Copy systemd service file
