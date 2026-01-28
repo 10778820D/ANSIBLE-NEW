@@ -43,6 +43,7 @@ jobs:
       - name: Run Ansible Playbook
         env:
           ANSIBLE_HOST_KEY_CHECKING: "False"
+          ANSIBLE_ROLES_PATH: ./ansible/roles
         run: |
           # Importante: ejecutamos desde la raíz porque tu repo tiene la carpeta 'ansible'
           ansible-playbook -i ansible/inventories/production.yml ansible/playbooks/deploy.yml --private-key ~/.ssh/id_rsa
