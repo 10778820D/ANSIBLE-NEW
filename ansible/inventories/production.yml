@@ -1,7 +1,7 @@
 all:
   hosts:
     web1:
-      ansible_host: f95abdab1262a5.lhr.life
+      ansible_host: e58e539fbe0dad.lhr.life
       ansible_port: 22
       ansible_user: deploy
       ansible_python_interpreter: /usr/bin/python3
