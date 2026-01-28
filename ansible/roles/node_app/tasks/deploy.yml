@@ -8,7 +8,7 @@
 
 - name: Checkout app code from repo
   git:
-    repo: 'https://github.com/TU_USUARIO/TU_REPO.git'
+    repo: 'https://github.com/10778820D/ANSIBLE-NEW.git'
     dest: /home/deploy/apps/myapp
     version: "{{ git_ref | default('main') }}"
     force: yes
