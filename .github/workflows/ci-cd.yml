@@ -47,6 +47,7 @@ jobs:
       - name: Run Ansible Playbook
         env:
           ANSIBLE_HOST_KEY_CHECKING: "False"
+          ANSIBLE_ROLES_PATH: ./ansible/roles
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         run: |
           ansible-playbook -i ansible/inventories/production.yml ansible/playbooks/deploy.yml --private-key /tmp/ssh_key
