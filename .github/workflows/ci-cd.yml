@@ -48,6 +48,7 @@ jobs:
         env:
           ANSIBLE_HOST_KEY_CHECKING: "False"
           ANSIBLE_ROLES_PATH: ./ansible/roles
+          GIT_REF: ${{ github.ref_name }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         run: |
           ansible-playbook -i ansible/inventories/production.yml ansible/playbooks/deploy.yml --private-key /tmp/ssh_key
